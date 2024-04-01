@@ -832,6 +832,9 @@ select {
 .w-full {
   width: 100%;
 }
+.w-28 {
+  width: 7rem;
+}
 .max-w-6xl {
   max-width: 72rem;
 }
@@ -966,6 +969,10 @@ select {
 .border-indigo-400 {
   --tw-border-opacity: 1;
   border-color: rgb(129 140 248 / var(--tw-border-opacity));
+}
+.border-red-500 {
+  --tw-border-opacity: 1;
+  border-color: rgb(239 68 68 / var(--tw-border-opacity));
 }
 .border-transparent {
   border-color: transparent;
