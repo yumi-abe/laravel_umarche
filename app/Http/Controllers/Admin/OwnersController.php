@@ -23,16 +23,16 @@ public function __construct()
 
     public function index()
     {
-        $data_now = Carbon::now();
-        $data_parse = Carbon::parse(now());
-        echo $data_now;
-        echo '<br>';
-        echo $data_parse;
-        echo '<br>';
+        // $data_now = Carbon::now();
+        // $data_parse = Carbon::parse(now());
+        // echo $data_now;
+        // echo '<br>';
+        // echo $data_parse;
+        // echo '<br>';
 
-        $e_all = Owner::all();
-        $q_get = DB::table('owners')->select('name', 'created_at')->get();
-        // $q_first = DB::table('owners')->select('name')->first();
+        // $e_all = Owner::all();
+        // $q_get = DB::table('owners')->select('name', 'created_at')->get();
+        // // $q_first = DB::table('owners')->select('name')->first();
 
         // $c_test = collect([
         //     'name' => 'てすと'
@@ -41,7 +41,9 @@ public function __construct()
         // var_dump($q_first);
 
         // dd($e_all, $q_get, $q_first, $c_test);
-        return view('admin.owners.index',compact('e_all', 'q_get'));
+
+        $owners = Owner::Select('name', 'email', 'created_at')->get();
+        return view('admin.owners.index',compact('owners'));
     }
 
     /**
@@ -51,7 +53,7 @@ public function __construct()
      */
     public function create()
     {
-        //
+        return view('admin.owners.create');
     }
 
     /**
