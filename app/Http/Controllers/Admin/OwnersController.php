@@ -44,7 +44,7 @@ public function __construct()
 
         // dd($e_all, $q_get, $q_first, $c_test);
 
-        $owners = Owner::Select('name', 'email', 'created_at')->get();
+        $owners = Owner::Select('id','name', 'email', 'created_at')->get();
         return view('admin.owners.index',compact('owners'));
     }
 
@@ -103,7 +103,9 @@ public function __construct()
      */
     public function edit($id)
     {
-        //
+        $owner = Owner::findOrFail($id);
+        // dd($owner);
+        return view('admin.owners.edit', compact('owner'));
     }
 
     /**
@@ -115,7 +117,16 @@ public function __construct()
      */
     public function update(Request $request, $id)
     {
-        //
+        $owner = Owner::findOrFail($id);
+        $owner->name = $request->name;
+        $owner->email = $request->email;
+        $owner->password = Hash::make($request->password);
+        $owner->save();
+
+        return redirect()
+        ->route('admin.owners.index')
+        ->with('message', 'オーナー情報を更新しました。');
+
     }
 
     /**
