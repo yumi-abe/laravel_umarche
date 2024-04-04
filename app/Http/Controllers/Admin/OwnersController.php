@@ -44,7 +44,8 @@ public function __construct()
 
         // dd($e_all, $q_get, $q_first, $c_test);
 
-        $owners = Owner::Select('id','name', 'email', 'created_at')->get();
+        $owners = Owner::Select('id','name', 'email', 'created_at')
+        ->paginate(3);
         return view('admin.owners.index',compact('owners'));
     }
 
