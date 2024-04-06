@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
 use Illuminate\Support\Facades\Storage;
 use App\Http\Requests\UploadImageRequest;
+use App\Services\ImageService;
 
 
 
@@ -53,7 +54,9 @@ class ShopController extends Controller
     {
         $imageFile = $request->image; //一時保存
         if(!is_null($imageFile) && $imageFile->isValid() ){
-        Storage::putFile('public/shops', $imageFile);
+        $fileNameToStore = ImageService::upload($imageFile, 'shops');
+        
+            // Storage::putFile('public/shops', $imageFile);
         }
         
         return redirect()->route('owner.shops.index');
