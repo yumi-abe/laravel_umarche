@@ -13,8 +13,9 @@ class ImageService
         $extension = $imageFile->extension();
         $fileNameStore = $fileName. '_' . $extension;
         if(!is_null($imageFile) && $imageFile->isValid() ){
-        Storage::putFile('public/'. $folderName . '/', $imageFile);
+        Storage::putFile('public/'. $folderName . '/', $fileNameStore);
         }
+
 
         return $fileNameStore;
     }
