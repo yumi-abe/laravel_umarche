@@ -15,7 +15,8 @@ class ImageService
         // dd($fileNameToStore, $folderName, $imageFile,$extension);
 
         if(!is_null($imageFile) && $imageFile->isValid() ){
-        Storage::putFile('public/'. $folderName . '/', $imageFile);
+        // Storage::putFile('public/'. $folderName . '/', $imageFile);
+        Storage::putFileAs('public/' . $folderName . '/' , $file, $fileNameToStore );
         }
         
         
