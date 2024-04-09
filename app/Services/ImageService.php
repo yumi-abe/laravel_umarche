@@ -11,13 +11,17 @@ class ImageService
 
         $fileName = uniqid(rand().'_');
         $extension = $imageFile->extension();
-        $fileNameStore = $fileName. '_' . $extension;
+        $fileNameToStore = $fileName. '_' . $extension;
+        // dd($fileNameToStore, $folderName, $imageFile,$extension);
+
         if(!is_null($imageFile) && $imageFile->isValid() ){
-        Storage::putFile('public/'. $folderName . '/', $fileNameStore);
+        Storage::putFile('public/'. $folderName . '/', $imageFile);
         }
+        
+        
 
-
-        return $fileNameStore;
+        // return $fileNameStore;
+        return $fileNameToStore;
     }
 }
 
