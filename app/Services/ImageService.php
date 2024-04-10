@@ -16,7 +16,7 @@ class ImageService
 
         if(!is_null($imageFile) && $imageFile->isValid() ){
         // Storage::putFile('public/'. $folderName . '/', $imageFile);
-        Storage::putFileAs('public/' . $folderName . '/' , $file, $fileNameToStore );
+        Storage::putFileAs('public/' . $folderName . '/' , $imageFile, $fileNameToStore );
         }
         
         
