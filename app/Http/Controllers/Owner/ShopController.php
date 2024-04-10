@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Shop;
+use Illuminate\Support\Facades\Storage;
 
 
 
@@ -34,6 +35,7 @@ class ShopController extends Controller
 
     public function index()
     {
+        // phpinfo();
         // $ownerId = Auth::id();
         $shops = Shop::where('owner_id', Auth::id())->get();
 
@@ -49,8 +51,16 @@ class ShopController extends Controller
     }
 
     public function update(Request $request, $id)
-    {
+ {
+        $imageFile = $request->image; //一時保存
+        // dd($imageFile);
+        if(!is_null($imageFile) && $imageFile->isValid() ){
+        Storage::putFile('public/shops', $imageFile);
+ }
 
-    }
+        return redirect()->route('owner.shops.index');
+
+ }
+
 
 }
