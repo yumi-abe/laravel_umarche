@@ -6,7 +6,7 @@
 
 画像のダミーデータは
 public/imagesフォルダ内に
-sample1.jpg～sample1.jpgとして
+sample1.jpg～sample6.jpgとして
 保存しています。
 
 php artisan storage:link　で
@@ -15,3 +15,7 @@ storageフォルダにリンク後、
 storage/app/public/productsフォルダに
 保存すると表示されます。
 (productsフォルダがない場は作成してください)
+
+ショップの画像も表示する場合は、
+storage/app/public/shopsフォルダを作成し
+画像を保存してください。
