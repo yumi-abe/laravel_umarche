@@ -60,7 +60,7 @@ class CartController extends Controller
         $user = User::findOrFail(Auth::id());
         $products = $user->products;
 
-        $LineItems = [];
+        $lineItems = [];
 
         foreach($products as $product){
             $quantity = '';
@@ -69,15 +69,21 @@ class CartController extends Controller
             if($product->pivot->quantity > $quantity){
                 return redirect()->route('user.cart.index');
             } else {
-                $LineItem = [
-                    'name' => $product->name,
-                    'description' => $product->information,
-                    'amount' => $product->price,
-                    'cueency' => 'jpy',
-                    'quantity' => $product->pivot->quantity
+                $price_data = [
+                    'unit_amount' => $product->price,
+                    'currency' => 'jpy',
+                    'product_data' => $product_data = ([
+                        'name' => $product->name,
+                        'description' => $product->information,
+                    ]),
+                ];
+
+                $lineItem = [
+                    'price_data' => $price_data,
+                    'quantity' => $product->pivot->quantity,
                 ];
     
-                array_push($LineItems, $LineItem);
+                array_push($lineItems, $lineItem);
                
             }
 
@@ -92,18 +98,19 @@ class CartController extends Controller
             ]);
         }
 
-        dd('test');
+        // dd('test');
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY '));
         $session = \Stripe\Checkout\Session::create([
             'payment_method_types' => ['card'],
-            'line_items' => [$LineItems],
+            'line_items' => [$lineItems],
             'mode' => 'payment',
-            'success_url' => route('user.items.index') . '/success.html',
-            'cancel_url' => route('user.cart.index') . '/cancel.html',
+            'success_url' => route('user.items.index'),
+            'cancel_url' => route('user.cart.index'),
         ]);
 
-        $publicKey = env('STRIPE_PUBLIC_KEY ');
+        $publicKey = env('STRIPE_PUBLIC_KEY');
+
 
         return view('user.checkout',
         compact('session', 'publicKey'));
