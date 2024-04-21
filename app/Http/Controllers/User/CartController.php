@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Cart;
 use App\Models\User;
+use App\Models\Stock;
 use Illuminate\Support\Facades\Auth;
 
 class CartController extends Controller
@@ -62,19 +63,36 @@ class CartController extends Controller
         $LineItems = [];
 
         foreach($products as $product){
-            $LineItem = [
-                'name' => $product->name,
-                'description' => $product->information,
-                'amount' => $product->price,
-                'cueency' => 'jpy',
-                'quantity' => $product->pivot->quantity
-            ];
+            $quantity = '';
+            $quantity = Stock::where('product_id', $product->id)->sum('quantity');
 
-            
-            array_push($LineItems, $LineItem);
-           
+            if($product->pivot->quantity > $quantity){
+                return redirect()->route('user.cart.index');
+            } else {
+                $LineItem = [
+                    'name' => $product->name,
+                    'description' => $product->information,
+                    'amount' => $product->price,
+                    'cueency' => 'jpy',
+                    'quantity' => $product->pivot->quantity
+                ];
+    
+                array_push($LineItems, $LineItem);
+               
+            }
+
         }
         // dd($LineItems);
+
+        foreach($products as $product){
+            Stock::create([
+                    'product_id' => $product->id,
+                    'type' => \Constant::PRODUCT_LIST['reduce'],
+                   'quantity' => $product->pivot->quantity * -1
+            ]);
+        }
+
+        dd('test');
 
         \Stripe\Stripe::setApiKey(env('STRIPE_SECRET_KEY '));
         $session = \Stripe\Checkout\Session::create([
