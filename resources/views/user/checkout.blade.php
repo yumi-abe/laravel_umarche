@@ -3,7 +3,7 @@
 <script>
 
     const publicKey = '{{ $publicKey }}'
-    const stripe = Stripe::setApiKey(publicKey)
+    const stripe = Stripe(publicKey)
 
     window.onload = function() {
  stripe.redirectToCheckout({
