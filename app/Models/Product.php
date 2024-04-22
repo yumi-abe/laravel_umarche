@@ -112,5 +112,15 @@ class Product extends Model
             return $query->orderBy('products.created_at', 'asc') ;
             }
             }
+
+            public function scopeSelectCategory($query, $categoryId)
+    {
+        if($categoryId !== '0')
+        {
+            return $query->where('secondary_category_id', $categoryId);
+        } else {
+            return ;
+        }
+    }
     
 }
