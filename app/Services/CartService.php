@@ -33,7 +33,6 @@ class CartService
 
         }
 
-        dd($products);
 
         return $products;
     }
